@@ -6,7 +6,7 @@ At the moment only exist 1 paramater
 ```sh
 GET data?player=neopkr
 ```
-With that you can retrieve all data of the player.
+With that you can retrieve all data of the player
 
 # Issues
 There is a big issue at the moment, not all errors are handled so the API can literally destroy the server.
