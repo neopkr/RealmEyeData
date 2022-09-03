@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet"
+            href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+        <title>RealmData</title>
+    </head>
+    <body>
+        <main class="container">
+            <div class="grid">
+                <form name="query" action="." method="post">
+                    <label>
+                        Player In-Game Name
+                        <input type="text" required name="ign"
+                            placeholder="Player IGN">
+                        <small>Example: neopkr <br>The query is case sentitive!</small>
+                    </label>
+                    <button type="submit">Search</button>
+                </form>
+            </div>
+            <div>
+                <pre id="results">{{ ign }}</pre>
+            </div>
+            <footer>
+                <hr>
+                <p>
+                    <small>
+                        Code licensed: <a href="">MIT</a> <br><br>
+                        Check our <a href="">repository</a> for more information
+                        with QueryUrl. <br>
+                        With ❤, neopkr.
+                    </small>
+                </p>
+            </footer>
+        </main>
+    </body>
+</html>
