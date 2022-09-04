@@ -5,6 +5,8 @@ This proyect was made for the people who wants to get information from RealmEye 
 At the moment only exist 1 paramater
 ```sh
 GET data?player=neopkr
+# example:
+https://realmdata.herokuapp.com/data?player=neopkr
 ```
 With that you can retrieve all data of the player
 
