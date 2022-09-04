@@ -13,7 +13,6 @@ def index():
 def home():
     player = request.form['ign']
     data = realmdata.ReturnRealmEyeData(realmdata.getRealmEyeData(player), realmdata.getCharacters(player))
-    button = True
     return render_template('index.html', button=True, ign=json.dumps(data, indent=3))
 @views.route("/data")
 def rawContent():
