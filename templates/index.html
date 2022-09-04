@@ -4,6 +4,19 @@
         <meta charset="UTF-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <script>
+            function required() {
+                var empt = document.forms["query"]["ign"].value;
+                if (empt == '') {
+                    //alert('Please, input a value') // better way to do this?
+                    document.querySelector('#submit').removeAttribute('aria-busy')
+                    return false
+                }
+            }
+            function load() {
+                document.querySelector('#submit').setAttribute('aria-busy', 'true')
+            }
+        </script>
         <link rel="stylesheet"
             href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
         <title>RealmData</title>
@@ -11,14 +24,14 @@
     <body>
         <main class="container">
             <div class="grid">
-                <form name="query" action="." method="post">
+                <form name="query" action="." method="post" onsubmit="return required()">
                     <label>
                         Player In-Game Name
-                        <input type="text" required name="ign"
-                            placeholder="Player IGN">
+                        <input type="text" name="ign"
+                            id="name" placeholder="Player IGN">
                         <small>Example: neopkr <br>The query is case sentitive!</small>
                     </label>
-                    <button type="submit">Search</button>
+                    <button id="submit" type="submit" onclick="load()">Search</button>
                 </form>
             </div>
             <div>

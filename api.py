@@ -35,6 +35,7 @@ def getSoup(playerIGN):
     page = urlopen(req).read()
     return BeautifulSoup(page, "html.parser")
 
+
 servers = ["USWest", "USWest3", "USWest4", "USSouthWest", "USSouth3", "USSouth", "USNorthWest", "USMidWest2", "USMidWest", "USEast", "USEast2", "EUWest2", "EUWest", "EUSouthWest", "EUNorth", "EUEast", "Australia", "Asia"]
 ouputFileError = {
     'playerNotFound': 'Sorry, the player you entered does not exist or is not registered in RealmEye, please try again.',
@@ -42,8 +43,7 @@ ouputFileError = {
 }
 
 # Http Req Info
-def getRealmEyeData(ign):
-    main = getRequestAllText(ign)
+def getRealmEyeData(main: str, ign):
     try:
         guild = main.split("Rank")[2].split(" ")[2].split("Guild")[1]
         guildLevel = main.split("Rank")[3].split(" ")[0]
@@ -60,32 +60,40 @@ def getRealmEyeData(ign):
     except:
         guild = "None"
         guildLevel = "None"
+    try: # player dont exist
+        defined = "either:haven't"
+        foundKey = main.split(' ').index('but')
+        if defined == main.split(' ')[foundKey + 2]:
+            return ouputFileError["playerNotFound"]
+    except ValueError:
+        pass
     try:
         player = main.split(" ")[5]
-        charAlive = main.split(ign)[2].split(" ")[0].replace("Characters", "").split("Skins")[0]
+        charAlive = main.split(player)[2].split(" ")[0].replace("Characters", "").split("Skins")[0]
         skins = main.split("Skins")[1].split(" ")[0]
         exalt = main.split("Exaltations")[3].split(" ")[0].split("Fame")[0]
+        bf = main.split("Exaltations")[3].split(" ")[0].split("Fame")[1]
         rank = main.split("Rank")[2].split(" ")[0].replace("Account", "")
+        last = main.split("Last")[1].split(" ")
     except IndexError:
         return ouputFileError["QueryError"]
-    last = main.split("Last")[1].split(" ")
     FoundServer = []
     for i in range(len(last)):
         if last[i] in servers:
             FoundServer.append(last[i])
     try:
-        return player, charAlive, skins, exalt, rank, [guild, guildLevel], FoundServer[0]
+        return player, charAlive, skins, exalt, bf, rank, [guild, guildLevel], FoundServer[0]
     except IndexError: 
-        return player, charAlive, skins, exalt, rank, [guild, guildLevel], 'Hidden'
+        return player, charAlive, skins, exalt, bf, rank, [guild, guildLevel], 'Hidden'
 
 
 # GetCharacters
-def getCharacters(ign):
-    ls = getRequestList(ign).split(" ") # list
+def getCharacters(ls, soup):
+    ls = ls.split(" ") # list
     classes = []
     filter = "</td><td>"
     id = []
-    for e in getSoup(ign).find_all(class_ = "character"):
+    for e in soup.find_all(class_ = "character"):
         classes.extend(e['class'])
         id.extend(e['id'])
     # id.index : 0 - ?, 0 = first char . . . last char
@@ -107,7 +115,7 @@ def getCharacters(ign):
             charList[i].pop(-1)
             charList[i].pop(2)
     itemClassParser = []
-    for i in getSoup(ign).find_all(class_ = "item"):
+    for i in soup.find_all(class_ = "item"):
         itemClassParser.append(i)
     itemParser = []
     itemList = []
@@ -131,17 +139,33 @@ class ReadHistory:
 # igm, alive, skins, exalt, rank
 #   1,     2,     3,     4,    5
 
-def ReturnRealmEyeData(MASTER, char):
-    if MASTER == ouputFileError["QueryError"]:
-        return ouputFileError["QueryError"]
+def ReturnRealmEyeData(player):
+    if player == '' or player == None:
+        return
+    pUrl = f"https://www.realmeye.com/player/{player}"
+    req = Request(pUrl, headers={'User-Agent': 'Mozilla/5.0'})
+    page = urlopen(req).read()
+    GetText = BeautifulSoup(page, "html.parser").get_text()
+    GetReqList = str(BeautifulSoup(page, "html.parser"))
+    
+    MASTER = getRealmEyeData(GetText, player)
+    char = getCharacters(GetReqList, BeautifulSoup(page, "html.parser"))
+    
+    if type(MASTER) != list:    
+        if MASTER == ouputFileError["playerNotFound"]:
+            return ouputFileError["playerNotFound"]
+        if MASTER == ouputFileError["QueryError"]:
+            return ouputFileError["QueryError"]
+    
     base = {
         "player": MASTER[0],
         "skins": MASTER[2],
         "aliveCharacters": MASTER[1],
         "exaltations": MASTER[3],
-        "rank": MASTER[4],
-        "guild": f"{MASTER[5][0]}, {MASTER[5][1]}",
-        'lastSeen': MASTER[6],
+        'basefame': MASTER[4],
+        "rank": MASTER[5],
+        "guild": f"{MASTER[6][0]}, {MASTER[6][1]}",
+        'lastSeen': MASTER[7],
         "characters": {
 
         }
