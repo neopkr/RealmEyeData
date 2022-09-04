@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request
-import RealmEyeAPI.api as realmdata
+import api as realmdata
 import json
 
 app = Flask(__name__)
