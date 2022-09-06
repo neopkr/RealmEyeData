@@ -7,7 +7,7 @@ GET data?player=neopkr # raw json
 GET visual?player=neopkr # Show a visual content of the player
 # example:
 https://realmdata.herokuapp.com/data?player=neopkr
-https://realmdata.herokuapp.com/visuals?player=neopkr
+https://realmdata.herokuapp.com/visual?player=neopkr
 
 ```
 
