@@ -12,6 +12,11 @@
                     document.querySelector('#submit').removeAttribute('aria-busy')
                     return false
                 }
+                var json = document.getElementById('json')
+                var player = '{{ player }}'
+                console.log(json)
+                json.innerHTML = 'Convert to JSON: <a href="/data?player='+ player +'">'+ player +'</a>'
+                return true
             }
             function load() {
                 document.querySelector('#submit').setAttribute('aria-busy', 'true')
@@ -35,6 +40,9 @@
                 </form>
             </div>
             <div>
+                {% if test %}
+                    <p id="json">{{ test[0] }} <a href='/data?player={{ test[1] }}'>{{ test[1] }}</a></p>
+                {% endif %}
                 <pre id="results">{{ ign }}</pre>
             </div>
             <footer>

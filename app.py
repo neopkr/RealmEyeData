@@ -1,4 +1,4 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, make_response
 import api as realmdata
 import json
 
@@ -12,11 +12,15 @@ def home():
     player = request.form['ign']
     data = realmdata.ReturnRealmEyeData(player)
     print(request.form.get('a'))
-    return render_template('index.html', ign=json.dumps(data, indent=3), button=2)
+    test = ['Convert to JSON:', player]
+    return render_template('index.html', ign=json.dumps(data, indent=3), test=test)
 @app.route("/data")
 def rawContent():
     args = request.args
     name = args.get('player')
     data = realmdata.ReturnRealmEyeData(name)
-    return render_template('raw.html', ign=json.dumps(data, indent=4))
+    resp = make_response(json.dumps(data, indent=4))
+    resp.headers['Access-Control-Allow-Origin'] = '*'
+    resp.content_type = 'application/json'
+    return resp
 
