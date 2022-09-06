@@ -75,7 +75,7 @@
             <script>
             async function api () {
                 try {
-                    const response = await fetch('https://realmdata.herokuapp.com/data?player={{ign}}')
+                    const response = await fetch('/data?player={{ign}}')
                     if (!response.ok) throw new Error(`Error! status: ${response.status}`)
                     const result = await response.json()
                     return result
