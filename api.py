@@ -39,7 +39,7 @@ def getSoup(playerIGN):
 servers = ["USWest", "USWest3", "USWest4", "USSouthWest", "USSouth3", "USSouth", "USNorthWest", "USMidWest2", "USMidWest", "USEast", "USEast2", "EUWest2", "EUWest", "EUSouthWest", "EUNorth", "EUEast", "Australia", "Asia"]
 ouputFileError = {
     'playerNotFound': 'Sorry, the player you entered does not exist or is not registered in RealmEye, please try again.',
-    'QueryError': "Sorry... the query was not successful. You can send this error to the repository to fix it as quickly as possible: https://github.com/neopkr/RealmEyeData/issues"
+    'QueryError': "QueryError: Sorry... the query was not successful. You can send this error to the repository to fix it as quickly as possible: https://github.com/neopkr/RealmEyeData/issues"
 }
 
 # Http Req Info
