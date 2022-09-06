@@ -13,6 +13,7 @@
             <div class="root">
                 <small>Page made with Vanilla JS</small>
                 <h2>RealmData: Player Information</h2>
+                <p id="fetch">Fetching info...</p>
                 <figure>
                     <table>
                         <thead>
@@ -96,6 +97,7 @@
             var guild__name = $('guild__name')
             var last__seen = $('last__seen')
 
+            var hFetch = $('fetch')
 
             var charNumber = $('char')
             var charClass = $('class')
@@ -107,6 +109,7 @@
             api().then( async (res) => {
                 //root.innerHTML = await JSON.stringify(res, null, 4)
                 //h3.innerHTML = 'JSON File:'
+                $$(hFetch, '')
                 $$(player, res.player)
                 $$(aliveChars, res.aliveCharacters)
                 $$(skins, res.skins)
