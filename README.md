@@ -1,5 +1,5 @@
 # RealmEyeData
-This proyect was made for the people who wants to get information from RealmEye with code. The proyect was made in Python3 using Flask, beautifulsoup4, request.
+This proyect was made for the people who wants to get information from RealmEye with code. The main api made in Python3 using Flask, beautifulsoup4, request.
 
 ## Query Params
 ```sh
