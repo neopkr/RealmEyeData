@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet"
+            href="https://unpkg.com/@picocss/pico@latest/css/pico.min.css">
+        <title>RealmData</title>
+    </head>
+    <body>
+        <main class="container">
+            <div class="root">
+                <small>Page made with Vanilla JS</small>
+                <h2>RealmData: Player Information</h2>
+                <figure>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">Player</th>
+                                <th scope="col">Alive Characters</th>
+                                <th scope="col">Skins</th>
+                                <th scope="col">Exaltations</th>
+                                <th scope="col">Basefame</th>
+                                <th scope="col">Rank</th>
+                                <th scope="col">Guild</th>
+                                <th scope="col">Last Seen</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row" id="player"></th>
+                                <td id="aliveChars"></td>
+                                <td id="skins"></td>
+                                <td id="exalt"></td>
+                                <td id="bf"></td>
+                                <td id="rank"></td>
+                                <td id="guild__name"></td>
+                                <td id="last__seen"></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </figure>
+                <figure>
+                    <table>
+                        <thead>
+                            <tr>
+                                <th scope="col">#</th>
+                                <th scope="col">Class</th>
+                                <th scope="col">Level</th>
+                                <th scope="col">Basefame</th>
+                                <th scope="col">Experience</th>
+                                <th scope="col">Placement</th>
+                                <th scope="col">#</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <th scope="row" id="char"></th>
+                                <td id="class"></td>
+                                <td id="level"></td>
+                                <td id="basefame"></td>
+                                <td id="experience"></td>
+                                <td id="placement"></td>
+                                <td>item</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </figure>
+                <div>
+                    <h3 id="onload"></h3>
+                    <pre id="content"></pre>
+                </div>
+            </div>
+            <script>
+            async function api () {
+                try {
+                    const response = await fetch('https://realmdata.herokuapp.com/data?player={{ign}}')
+                    if (!response.ok) throw new Error(`Error! status: ${response.status}`)
+                    const result = await response.json()
+                    return result
+                } catch(err) {
+                    console.error(err)
+                }
+            }
+            const $ = (id) => document.getElementById(id)
+            const $$ = (doc, string) => doc.innerHTML = string;
+            var root = document.getElementById('content')
+            var h3 = document.getElementById('onload')
+            var player = $('player')
+            var aliveChars = $('aliveChars')
+            var skins = $('skins')
+            var exalt = $('exalt')
+            var bf = $('bf')
+            var rank = $('rank')
+            var guild__name = $('guild__name')
+            var last__seen = $('last__seen')
+
+
+            var charNumber = $('char')
+            var charClass = $('class')
+            var charLevel = $('level')
+            var charBasefame = $('basefame')
+            var charExperience = $('experience')
+            var charPlacement = $('placement')
+
+            api().then( async (res) => {
+                //root.innerHTML = await JSON.stringify(res, null, 4)
+                //h3.innerHTML = 'JSON File:'
+                $$(player, res.player)
+                $$(aliveChars, res.aliveCharacters)
+                $$(skins, res.skins)
+                $$(exalt, res.exaltations)
+                $$(bf, res.basefame)
+                $$(rank,res.rank)
+                $$(guild__name, res.guild)
+                $$(last__seen, res.lastSeen)
+                $$(charNumber, '0')
+                $$(charClass, res.characters[0].class)
+                $$(charLevel, res.characters[0].level)
+                $$(charBasefame, res.characters[0].basefame)
+                $$(charExperience, res.characters[0].experience)
+                $$(charPlacement, res.characters[0].placement)
+            })
+        </script>
+        </main>
+    </body>
+</html>

@@ -23,4 +23,9 @@ def rawContent():
     resp.headers['Access-Control-Allow-Origin'] = '*'
     resp.content_type = 'application/json'
     return resp
-
+@app.route('/visual')
+def visualContent():
+    args = request.args
+    player = args.get('player')
+    return render_template('visual.html', ign = player)
+    
