@@ -2,11 +2,13 @@
 This proyect was made for the people who wants to get information from RealmEye with code. The proyect was made in Python3 using Flask, beautifulsoup4, request.
 
 ## Query Params
-At the moment only exist 1 paramater
 ```sh
-GET data?player=neopkr
+GET data?player=neopkr # raw json 
+GET visual?player=neopkr # Show a visual content of the player
 # example:
 https://realmdata.herokuapp.com/data?player=neopkr
+https://realmdata.herokuapp.com/visuals?player=neopkr
+
 ```
 
 ### Query Examples with JS, Python3
